@@ -33,7 +33,8 @@ class SignIn extends React.Component {
     return '';
   }
   
-  doSignIn() {
+  doSignIn(e) {
+    e.preventDefault();
     this.setState({ 
       noUsername: !this.state.username,
       noPassword: !this.state.password
@@ -49,47 +50,52 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className="signin-form">
         <CssBaseline />
         <Typography component="h1" variant="h5">Sign in</Typography>
-        <TextField 
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          ref="username"
-          label="Username"
-          name="username"
-          autoComplete="username"
-          error={this.state.noUsername}
-          helperText={this.state.noUsername ? 'Please provie a username.' : ''}
-          autoFocus
-          onChange={(e) => this.updateUsername(e)}
-        />
-        <TextField 
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="password"
-          type="password"
-          label="Password"
-          name="password"
-          autoComplete="password"
-          error={this.state.noPassword || this.props.failedLogIn}
-          helperText={this.getPasswordHelperText()}
-          onChange={(e) => this.updatePassword(e)}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={() => this.doSignIn()}
-        >
-          Sign In
-        </Button>
+        <form method="POST">
+          <TextField 
+            className="signin-form__username"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            ref="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            error={this.state.noUsername}
+            helperText={this.state.noUsername ? 'Please provie a username.' : ''}
+            autoFocus
+            onChange={(e) => this.updateUsername(e)}
+          />
+          <TextField 
+            className="signin-form__password"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            type="password"
+            label="Password"
+            name="password"
+            autoComplete="password"
+            error={this.state.noPassword || this.props.failedLogIn}
+            helperText={this.getPasswordHelperText()}
+            onChange={(e) => this.updatePassword(e)}
+          />
+          <Button
+            className="signin-form__submit"
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={(e) => this.doSignIn(e)}
+          >
+            Sign In
+          </Button>
+        </form>
       </Container>
     );
   }
