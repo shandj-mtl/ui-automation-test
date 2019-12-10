@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Container, 
   CssBaseline, 
@@ -7,24 +7,20 @@ import {
 
 import FeedbackForm from '../FeedbackForm';
 
-class Feedback extends React.Component {
-  state = {
-    sent: false
-  }
+function Feedback() {
+  const [ sent, setSent ] = useState(false)
 
-  render () {
-    return (
-      <Container component="main" maxWidth="md">
-        <CssBaseline />
-        <Typography component="h1" variant="h5" gutterBottom={true}>Feedback Form</Typography>
-        {
-          this.state.sent 
-            ? <Typography component="h2" variant="h6">Thank you for your feedback</Typography>
-            : <FeedbackForm send={() => this.setState({ sent: true })}/>
-        }
-      </Container>
-    );
-  }
+  return (
+    <Container component="main" maxWidth="md">
+      <CssBaseline />
+      <Typography component="h1" variant="h5" gutterBottom={true}>Feedback Form</Typography>
+      {
+        sent 
+          ? <Typography component="h2" variant="h6" className="feedback__sent">Thank you for your feedback</Typography>
+          : <FeedbackForm send={() => setSent(true)}/>
+      }
+    </Container>
+  );
 }
 
 export default Feedback;

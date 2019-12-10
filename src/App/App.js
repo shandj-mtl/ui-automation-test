@@ -1,35 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SignIn from '../SignIn';
 import Feedback from '../Feedback';
 
 import './App.css';
 
-class App extends React.Component {
-
-  state = {
-    loggedIn: false,
-    failedLogIn: false
-  }
-
-  validate({ username, password }) {
+function App() {
+  const [ loggedIn, setLoggedIn ] = useState(false)
+  const [ failedLogIn, setfailedLogIn ] = useState(false)
+  
+  function validate({ username, password }) {
     if (username === 'l.jenkins' && password === 'hunter2') {
-      this.setState({ loggedIn: true })
+      setLoggedIn(true)
     } else {
-      this.setState({ failedLogIn: true })
+      setfailedLogIn(true)
     }
   }
 
-  render() {
-    return (
-      <div className="app">
-        {this.state.loggedIn 
-          ? <Feedback />
-          : <SignIn validate={this.validate.bind(this)} failedLogIn={this.state.failedLogIn} />
-        }
-      </div>
-    );
-  }
+  return (
+    <div className="app">
+      {loggedIn 
+        ? <Feedback />
+        : <SignIn validate={validate} failedLogIn={failedLogIn} />
+      }
+    </div>
+  );
 }
 
 export default App;

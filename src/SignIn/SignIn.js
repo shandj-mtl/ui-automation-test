@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CssBaseline,
   Container,
@@ -7,98 +7,76 @@ import {
   Button
 } from '@material-ui/core';
 
-class SignIn extends React.Component {
-  state = {
-    username: '',
-    password: '',
-    noUsername: false,
-    noPassword: false,
-  }
+function SignIn({ failedLogIn, validate }) {
+  const [ username, setUsername ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ noUsername, setNoUsername ] = useState(false)
+  const [ noPassword, setNoPassword ] = useState(false)
 
-  updateUsername(e) {
-    this.setState({
-      username: e.target.value
-    })
-  }
-
-  updatePassword(e) {
-    this.setState({
-      password: e.target.value
-    })
-  }
-
-  getPasswordHelperText() {
-    if (this.state.noPassword) return 'Please enter a password.';
-    if (this.props.failedLogIn) return 'Please enter a valid username/password';
+  function getPasswordHelperText() {
+    if (noPassword) return 'Please enter a password.';
+    if (failedLogIn) return 'Please enter a valid username/password';
     return '';
   }
   
-  doSignIn(e) {
+  function doSignIn(e) {
     e.preventDefault();
-    this.setState({ 
-      noUsername: !this.state.username,
-      noPassword: !this.state.password
-    })
+    setNoUsername(!username)
+    setNoPassword(!password)
 
-    if (this.state.username && this.state.password) {
-      this.props.validate({
-        username: this.state.username,
-        password: this.state.password
-      });
+    if (username && password) {
+      validate({ username, password });
     }
   }
 
-  render() {
-    return (
-      <Container component="main" maxWidth="xs" className="signin-form">
-        <CssBaseline />
-        <Typography component="h1" variant="h5">Sign in</Typography>
-        <form method="POST">
-          <TextField 
-            className="signin-form__username"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            ref="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            error={this.state.noUsername}
-            helperText={this.state.noUsername ? 'Please provie a username.' : ''}
-            autoFocus
-            onChange={(e) => this.updateUsername(e)}
-          />
-          <TextField 
-            className="signin-form__password"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="password"
-            type="password"
-            label="Password"
-            name="password"
-            autoComplete="password"
-            error={this.state.noPassword || this.props.failedLogIn}
-            helperText={this.getPasswordHelperText()}
-            onChange={(e) => this.updatePassword(e)}
-          />
-          <Button
-            className="signin-form__submit"
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={(e) => this.doSignIn(e)}
-          >
-            Sign In
-          </Button>
-        </form>
-      </Container>
-    );
-  }
+  return (
+    <Container component="main" maxWidth="xs" className="signin-form">
+      <CssBaseline />
+      <Typography component="h1" variant="h5">Sign in</Typography>
+      <form method="POST">
+        <TextField 
+          className="signin-form__username"
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="username"
+          error={noUsername}
+          helperText={noUsername ? 'Please provie a username.' : ''}
+          autoFocus
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField 
+          className="signin-form__password"
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="password"
+          type="password"
+          label="Password"
+          name="password"
+          autoComplete="password"
+          error={noPassword || failedLogIn}
+          helperText={getPasswordHelperText()}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          className="signin-form__submit"
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={(e) => doSignIn(e)}
+        >
+          Sign In
+        </Button>
+      </form>
+    </Container>
+  );
 }
 
 export default SignIn;
