@@ -35,6 +35,7 @@ function SignIn({ failedLogIn, validate }) {
       <Typography component="h1" variant="h5">Sign in</Typography>
       <form method="POST">
         <TextField 
+          inputProps={{ "data-testid": "username" }}
           className="signin-form__username"
           variant="outlined"
           margin="normal"
