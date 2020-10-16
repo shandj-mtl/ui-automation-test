@@ -14,5 +14,8 @@ The feedback form has validation to check that all required items are present, a
 `docker-compose up --build -d`
 
 ## Testing
+`npm test` to execute tests
 
-`npm t` to execute tests
+## UI Tests
+
+TO DO
