@@ -3,7 +3,7 @@ configuration:
   has_webserver: true
   scoring:
     # npm test is expected to produce test output in results/unit.xml file.
-    # command: "npm test"
+    command: "npm test"
     # files:
      # - results/unit.xml
   ide_config:
